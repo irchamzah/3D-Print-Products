@@ -1,7 +1,14 @@
 @echo off
-echo Mengubah semua .JPG_temp menjadi .jpg di folder ini dan subfolder...
-for /r %%f in (*.JPG_temp) do (
-    ren "%%f" "%%~nf.jpg"
+echo Mengubah semua file *_temp.jpg menjadi *.jpg di folder ini dan subfolder...
+
+for /r %%f in (*_temp.jpg) do (
+    set "fullpath=%%f"
+    setlocal enabledelayedexpansion
+    set "filename=%%~nf"
+    set "newname=!filename:_temp=!.jpg"
+    ren "%%f" "!newname!"
+    endlocal
 )
-echo Selesai! Sekarang commit & push perubahan final ke GitHub.
+
+echo Selesai! Semua file _temp.jpg sudah diubah menjadi .jpg
 pause
